@@ -1,0 +1,31 @@
+Actúa como un Senior Frontend Architect experto en React. Configura la base de un proyecto de "Plataforma de Eventos" utilizando: Vite, React (TypeScript), Tailwind CSS, Zustand, React Hook Form, Zod y Lucide React.
+
+### 1. Arquitectura de Carpetas (Feature-Based)
+Organiza el proyecto bajo la siguiente estructura escalable:
+- `src/api/`: Servicios de Axios/Fetch y clientes base.
+- `src/components/ui/`: Componentes atómicos reutilizables (Botones, Inputs, Skeletons).
+- `src/features/`: Un directorio por módulo funcional. Cada uno contiene:
+    - `/components`: Componentes exclusivos de la funcionalidad.
+    - `/hooks`: Lógica de React exclusiva.
+    - `/services`: Llamadas a API del módulo.
+    - `/store`: Estados de Zustand específicos.
+    - `/types`: Definiciones de TypeScript y esquemas Zod.
+- `src/hooks/`: Hooks globales.
+- `src/lib/`: Configuraciones de librerías (utils para tailwind, axios config).
+- `src/shared/`: Enums, constantes y utilidades globales.
+
+### 2. Reglas de Desarrollo y Buenas Prácticas
+- **TypeScript Estricto:** Usa `interface` para objetos y `type` para uniones. Prohibido el uso de `any`.
+- **Enums y Constantes:** Utiliza `enums` para estados (ej. STATUS_PAYMENT = 'PENDING' | 'SUCCESS').
+- **Escalabilidad:** Implementa el patrón "Barrel exports" (archivos index.ts) para facilitar las importaciones.
+- **Formularios:** Usa siempre React Hook Form integrado con Zod para validaciones.
+- **UI/UX:** Implementa Skeletons para estados de carga utilizando Tailwind y animaciones de pulse.
+
+### 3. Tareas Iniciales Requeridas
+1. Configura una utilidad `cn` (clsx + tailwind-merge) en `src/lib/utils.ts`.
+2. Crea el esquema de validación de Zod para el Registro de Usuario y un Pago de Evento.
+3. Define un `authStore` básico con Zustand para manejar la sesión del usuario.
+4. Crea un componente `EventCard` con su respectivo `EventCardSkeleton`.
+5. Estructura el primer módulo: `features/events/` con una lista dummy de eventos.
+
+Genera la estructura de archivos inicial y el código base siguiendo estos lineamientos.

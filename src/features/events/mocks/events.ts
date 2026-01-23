@@ -1,0 +1,73 @@
+import { type Event, type EventDetail } from '../types'
+
+export const mockEvents: Event[] = [
+  {
+    id: 1,
+    title: 'Neon Pulse Ritual',
+    description: 'Una noche de música electrónica y luces neón',
+    date: '2024-02-20',
+    time: '22:00',
+    location: 'PLUS Main Hall',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBnZzqklzy0irgsHe917GLOt1q2hn2ZRZ5iWyn_j2yIUxrxwRGeAeLX9LnJDavFP__sXGsao1KfyEzOX_A-LbNxZ--gKwh0s_CdOOqkTDZmm0lLCLQ7euWd_JLemXmRY4bmDpXy2iOTHRvwj3czfozoSpJzy5nFYQi26FSl1uVTI-0IGenWs8HQp_COYgkDpDbHyqFOh2lTornxZQP6LvdbOKKhsY2RtSUiByiNfVEQeIzPQf0wWSo9zzO3iz5UwbKKcr_LvxhlCN0',
+    status: 'upcoming',
+  },
+  {
+    id: 2,
+    title: 'Midnight Gold',
+    description: 'Elegante noche dorada',
+    date: '2024-02-24',
+    time: '22:00',
+    location: 'PLUS Main Hall',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB4Kjc6LFf0VqLttbj7Jke_-41QtHcljnvP3f5jhqrvgjUGreKaZPJSFnrzwWIgi2uG5RVbh7-LPIlt6E1dBBeR1MSAQmDcCUDF9vAuK-mUF575lM-uPGpNH_79d3-aTupW0Jg1N6vYLBpciF6WXL5JdEkBK3fULUGWzfrOhC2yePdRp5ZaqyjiOF5pRZiHteeA0n_DNl9Q85eDLjhUoTLi17MdwOmBcLWpqATN6TZDWgPqknLCFA5Dux9gB4FvpYqJdG6GPo1ig8Y',
+    status: 'upcoming',
+  },
+  {
+    id: 3,
+    title: 'Urban Dynasty',
+    description: 'La mejor música urbana',
+    date: '2024-03-01',
+    time: '22:00',
+    location: 'PLUS Main Hall',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuByR4Oug4-vO0o0i7UHAIdlaOtr-Q93dg-u4xCMI40-e-DDrISxZ7Bh0mV9JW1crkY9AtBn6f3AuSRopFf70jdkzVtwtJir3LMBZOEYzAOmhmo10ox6cZcIkmksYlCGZTGb6H8proRGMdjmRWTKrV9FMggNixvtq-X0tEnO071BQOVdRtDZ3gYztiF6VUf35w7HMkbqh71k0Atbwmp8I8eHMw4yKhpUtoGwDseMniU8HIgIp3395uZLgxM_qVtK-y6ys07kL9WdsQ8',
+    status: 'upcoming',
+  },
+  {
+    id: 4,
+    title: 'Eclipse Sessions',
+    description: 'Sesiones exclusivas bajo la luna',
+    date: '2024-03-08',
+    time: '22:00',
+    location: 'PLUS Main Hall',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB87ZfOJ6Q4b_dw6hursVlumsH4aaKz9X9FA-0hwW7bE_imlsfWcWN4addjzE4OwtIvxsyd2eYkK30YVIrusrA4lIffrthULNxfgHx8yMuh89CHySoXb-T4IIspbz7TdUdq63HEY-4dLUZFul_dRlkgq81wHRGCg_vDA36dSAJF_J3KYHQ870udyCDJNUgmsUkJIc1XQMeS3tFOLRYX9nZDoShL-IMAEV3PE89no8bfmbt0JSPcvdMW7fHxo90E03hdeNbcOf-MZJM',
+    status: 'upcoming',
+  },
+  {
+    id: 5,
+    title: 'Valentine\'s Nightlife',
+    description: 'Noche especial de San Valentín',
+    date: '2024-02-14',
+    time: '22:00',
+    location: 'PLUS Main Hall',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC2Mir_sTiReUuUYzS7AEf_s6qgu8g09zFfuER3RHMVL3lwPEU2Yjk8bRMaiQUHqbGJ5AO9SqrQg-fzdqIp2V9AqAolK62dfJ7n6AwvoRMeWry8QxGd-CLu1WqxGWfuNrw8KV0a0LxiMdtZ1ovKzGfw7Zb4MVcjzljokLi69uYg9E1UfeLk2AcFWFXEAEjhzL4iBeWXuxmeMuXP7IQmCmhkPlMP86VFkchkV5hWal7CN4I8r9Br1G_NyyyLc41n1p8e-f2fPgjOWNE',
+    status: 'upcoming',
+  },
+]
+
+export const mockEventDetail: EventDetail = {
+  id: 5,
+  title: 'Valentine\'s Nightlife',
+  description: 'Noche especial de San Valentín',
+  full_description: 'Una noche inolvidable llena de elegancia, música y romance. Únete a nosotros para celebrar el día del amor en el ambiente más exclusivo de la ciudad.',
+  date: '2024-02-14',
+  time: '22:00',
+  start_time: '22:00',
+  end_time: '05:00',
+  location: 'PLUS Main Hall',
+  venue: 'PLUS Main Hall',
+  image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC2Mir_sTiReUuUYzS7AEf_s6qgu8g09zFfuER3RHMVL3lwPEU2Yjk8bRMaiQUHqbGJ5AO9SqrQg-fzdqIp2V9AqAolK62dfJ7n6AwvoRMeWry8QxGd-CLu1WqxGWfuNrw8KV0a0LxiMdtZ1ovKzGfw7Zb4MVcjzljokLi69uYg9E1UfeLk2AcFWFXEAEjhzL4iBeWXuxmeMuXP7IQmCmhkPlMP86VFkchkV5hWal7CN4I8r9Br1G_NyyyLc41n1p8e-f2fPgjOWNE',
+  status: 'upcoming',
+  capacity: 200,
+  confirmed_count: 45,
+  payment_status: 'partial',
+}
+

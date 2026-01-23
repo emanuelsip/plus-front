@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: plus-events-frontend-prod
+    ports:
+      - "80:80"
+    environment:
+      - VITE_API_BASE_URL=${VITE_API_BASE_URL:-http://localhost:8000/api}
+      - VITE_SANCTUM_CSRF_URL=${VITE_SANCTUM_CSRF_URL:-http://localhost:8000/sanctum/csrf-cookie}
+      - VITE_USE_MOCKS=${VITE_USE_MOCKS:-false}
+    restart: unless-stopped
+

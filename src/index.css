@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 font-sans antialiased;
+    background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 100%);
+    min-height: 100vh;
+  }
+  
+  * {
+    @apply selection:bg-primary selection:text-black;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .gold-gradient {
+    background: linear-gradient(90deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+  }
+  
+  .gold-text-gradient {
+    background: linear-gradient(90deg, #BF953F, #FCF6BA, #AA771C);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .logo-glow {
+    filter: drop-shadow(0 0 30px rgba(255,255,255,0.1));
+  }
+  
+  .event-card-img {
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .event-card:hover .event-card-img {
+    transform: scale(1.03);
+  }
+}
+
