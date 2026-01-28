@@ -86,7 +86,7 @@ export const authService = {
         telefono: data.phone,
         nit: data.nit,
         password: data.password,
-        tipo_usuario: data.role === 'leader' ? 'lider' : 'invitado',
+        tipo_usuario: 'lider',
       }
     )
     const responseData = ensureSuccess(response.data)

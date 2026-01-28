@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -18,17 +18,12 @@ export const SignInPage = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    watch,
-    setValue,
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      role: 'guest',
       remember: true,
     },
   })
-
-  const role = watch('role')
 
   const onSubmit = async (data: LoginFormData) => {
     try {
@@ -42,14 +37,6 @@ export const SignInPage = () => {
     }
   }
 
-  const roleClasses = useMemo(
-    () => ({
-      base: 'px-4 py-2 rounded-full text-xs uppercase tracking-[0.2em] transition-all',
-      active: 'bg-primary text-black',
-      inactive: 'border border-white/10 text-white/70 hover:text-primary',
-    }),
-    []
-  )
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
@@ -68,8 +55,6 @@ export const SignInPage = () => {
         </header>
 
         <main className="w-full glass rounded-3xl p-8 md:p-10 shadow-2xl">
-     
-
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             {submitError && (
               <div className="rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-200">

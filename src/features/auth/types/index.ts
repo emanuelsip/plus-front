@@ -4,7 +4,6 @@ export const loginSchema = z.object({
   phone: z.string().min(8, 'El teléfono debe tener al menos 8 dígitos'),
   password: z.string().min(6, 'La contraseña debe tener al menos 6 caracteres'),
   remember: z.boolean().optional(),
-  role: z.enum(['leader', 'guest']).default('guest'),
 })
 
 export const registerSchema = z.object({
@@ -18,7 +17,6 @@ export const registerSchema = z.object({
   accept_terms: z.boolean().refine((value) => value === true, {
     message: 'Debes aceptar los términos y condiciones',
   }),
-  role: z.enum(['leader', 'guest']).default('guest'),
 }).refine((data) => data.password === data.password_confirmation, {
   message: 'Las contraseñas no coinciden',
   path: ['password_confirmation'],
