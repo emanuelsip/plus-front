@@ -32,5 +32,5 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           source: "dist/*"
           # Ajustado a la ruta que definimos para Docker
-          target: "~/app-discoteca/staging/front" 
+          target: "~/staging/front" 
           strip_components: 1
