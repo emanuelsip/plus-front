@@ -1,0 +1,27 @@
+name: Deploy Frontend Staging
+
+on:
+  push:
+    branches: [ staging ] # O la rama que uses
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install and Build
+        run: |
+          npm install
+          npm run build # Esto genera la carpeta 'dist'
+
+      - name: Deploy to VPS via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "dist/*"
+          target: "~/staging/front"
+          strip_components: 1

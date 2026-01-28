@@ -8,14 +8,9 @@ export const HomePage = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="h-screen w-full flex items-center justify-center flex-col bg-black overflow-hidden border-b border-white/5">
-        <div className="w-full max-w-[1200px] mx-auto px-6 pt-8">
-          <div className="grid grid-cols-12 items-center">
-            <div className="col-span-12 md:col-span-6" />
-            <div className="col-span-12 md:col-span-6 flex justify-end">
-              <AuthLinks />
-            </div>
-          </div>
+      <section className="relative h-screen w-full flex items-center justify-center flex-col bg-black overflow-hidden border-b border-white/5">
+        <div className="absolute top-20 right-20">
+          <AuthLinks />
         </div>
         <div className="relative flex flex-col items-center">
           <Logo variant="large" to="/" />

@@ -67,24 +67,6 @@ export const SignUpPage = () => {
               Únete a la experiencia PLUS
             </p>
           </div>
-
-          <div className="flex items-center justify-center gap-2 mb-6">
-            <button
-              type="button"
-              className={`${roleClasses.base} ${role === 'leader' ? roleClasses.active : roleClasses.inactive}`}
-              onClick={() => setValue('role', 'leader')}
-            >
-              Líder
-            </button>
-            <button
-              type="button"
-              className={`${roleClasses.base} ${role === 'guest' ? roleClasses.active : roleClasses.inactive}`}
-              onClick={() => setValue('role', 'guest')}
-            >
-              Invitado
-            </button>
-          </div>
-
           <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
             {submitError && (
               <div className="rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-200">

@@ -2,7 +2,6 @@ import axios, { type AxiosInstance, type InternalAxiosRequestConfig, type AxiosE
 
 // Base URL - cambiar según el entorno
 const API_BASE_URL = import.meta.env.VITE_API_URL
-  || import.meta.env.VITE_API_BASE_URL
   || 'http://localhost:80/api'
 
 // Crear instancia de Axios
@@ -44,9 +43,6 @@ apiClient.interceptors.response.use(
 
       // Limpiar token almacenado
       localStorage.removeItem('auth_token')
-
-      // Intentar obtener nuevo CSRF cookie
-      await getCsrfCookie()
 
       // Redirigir a login si es necesario (descomentar cuando tengas ruta de login)
       // window.location.href = '/login'

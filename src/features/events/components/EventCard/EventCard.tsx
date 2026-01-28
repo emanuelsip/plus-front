@@ -10,7 +10,6 @@ interface EventCardProps {
 export const EventCard = ({ event, className }: EventCardProps) => {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
-    const days = ['DOM', 'LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB']
     const months = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC']
     return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`
   }

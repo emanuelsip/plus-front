@@ -68,22 +68,7 @@ export const SignInPage = () => {
         </header>
 
         <main className="w-full glass rounded-3xl p-8 md:p-10 shadow-2xl">
-          <div className="flex items-center justify-center gap-2 mb-6">
-            <button
-              type="button"
-              className={`${roleClasses.base} ${role === 'leader' ? roleClasses.active : roleClasses.inactive}`}
-              onClick={() => setValue('role', 'leader')}
-            >
-              Líder
-            </button>
-            <button
-              type="button"
-              className={`${roleClasses.base} ${role === 'guest' ? roleClasses.active : roleClasses.inactive}`}
-              onClick={() => setValue('role', 'guest')}
-            >
-              Invitado
-            </button>
-          </div>
+     
 
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             {submitError && (

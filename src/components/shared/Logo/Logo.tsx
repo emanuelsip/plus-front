@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils'
 import { Link } from 'react-router-dom'
+import logoUrl from '@/assets/logo-plus-blanco.png'
 
 interface LogoProps {
   className?: string
@@ -7,8 +8,6 @@ interface LogoProps {
   invert?: boolean
   to?: string
 }
-
-const LOGO_URL = 'https://lh3.googleusercontent.com/aida-public/AB6AXuAYpIZ3LnAfFcWOxfbk6mWGF5EsFjNGGkjP7NqpfTwxU3qa_YGE6CS1LP1-Vk-ITfHYUQliPAJ330S7PyOxtEhrVqaPPxdlQlIRg0VVRzg7o9jwWBP4jFpqqvC8LnivcNuD09Jn9rYMaD-oeQHAM3zAkQg48tjJsxJBu6cTS6zGixWRS-t1RXVestrdyW6gC6cpr3mN_GXS1klbuL_vpjRXRgv_ZGWf0xiWzi0O06kOCddBc7zrSQXuXL3wH3J1lAEJQuISOFz-eNo'
 
 export const Logo = ({ className, variant = 'default', invert = false, to }: LogoProps) => {
   const sizes = {
@@ -27,7 +26,7 @@ export const Logo = ({ className, variant = 'default', invert = false, to }: Log
         'transition-all duration-300',
         className
       )}
-      src={LOGO_URL}
+      src={logoUrl}
     />
   )
 
