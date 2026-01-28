@@ -16,7 +16,7 @@
    
    Edita `.env` según tu configuración:
    ```env
-   VITE_API_BASE_URL=http://localhost:8000/api
+   VITE_API_URL=http://localhost:8000/api
    VITE_SANCTUM_CSRF_URL=http://localhost:8000/sanctum/csrf-cookie
    VITE_USE_MOCKS=true
   UID=1000
@@ -131,7 +131,7 @@ src/
 1. Edita `.env`:
    ```env
    VITE_USE_MOCKS=false
-   VITE_API_BASE_URL=http://tu-backend.com/api
+   VITE_API_URL=http://tu-backend.com/api
    ```
 
 2. El servicio automáticamente usará la API real.

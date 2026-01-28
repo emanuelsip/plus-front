@@ -87,14 +87,14 @@ docker-compose -f docker-compose.prod.yml down
 Copia el archivo `.env.example` a `.env` y edita las variables:
 
 ```env
-VITE_API_BASE_URL=http://localhost:8000/api
+VITE_API_URL=http://localhost:8000/api
 VITE_SANCTUM_CSRF_URL=http://localhost:8000/sanctum/csrf-cookie
 VITE_USE_MOCKS=true
 UID=1000
 GID=1000
 ```
 
-- `VITE_API_BASE_URL`: URL base de la API backend
+- `VITE_API_URL`: URL base de la API backend
 - `VITE_SANCTUM_CSRF_URL`: URL para obtener cookie CSRF de Sanctum
 - `VITE_USE_MOCKS`: Usar datos mock en lugar de API real (true/false). Por defecto es `true` para desarrollo.
 - `UID` / `GID`: Usuario y grupo local (Linux) para evitar `node_modules` con permisos de root.
@@ -166,7 +166,7 @@ La autenticación está preparada para Laravel Sanctum:
 ### Cambiar de Mocks a API Real
 
 1. Edita `.env` y cambia `VITE_USE_MOCKS=false`
-2. Asegúrate de que `VITE_API_BASE_URL` apunte a tu backend Laravel
+2. Asegúrate de que `VITE_API_URL` apunte a tu backend Laravel
 3. El cliente API automáticamente usará las llamadas reales
 
 ### Preparación para Sanctum
