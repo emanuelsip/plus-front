@@ -1,7 +1,7 @@
 import axios, { type AxiosInstance, type InternalAxiosRequestConfig, type AxiosError } from 'axios'
 
 // Base URL - cambiar según el entorno
-const API_BASE_URL = import.meta.env.VITE_API_URL
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
   || 'http://localhost:80/api'
 
 // Crear instancia de Axios
