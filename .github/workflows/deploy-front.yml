@@ -2,7 +2,7 @@ name: Deploy Frontend Staging
 
 on:
   push:
-    branches: [ staging ] # O la rama que uses
+    branches: [ staging ]
 
 jobs:
   build-and-deploy:
@@ -12,9 +12,12 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install and Build
+        # Inyectamos la variable aquí para que Vite la "queme" en el JS
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
         run: |
           npm install
-          npm run build # Esto genera la carpeta 'dist'
+          npm run build 
 
       - name: Deploy to VPS via SCP
         uses: appleboy/scp-action@v0.1.7
@@ -23,5 +26,6 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           source: "dist/*"
-          target: "~/staging/front"
+          # Ajustado a la ruta que definimos para Docker
+          target: "~/app-discoteca/staging/front" 
           strip_components: 1
