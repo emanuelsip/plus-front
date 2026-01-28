@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Input } from '@/components/ui'
-import { Logo } from '@/components/shared'
+import { AuthLinks, Logo } from '@/components/shared'
 import { authService } from '../services/authService'
 import { useAuthStore } from '../store/authStore'
 import { loginSchema, type LoginFormData } from '../types'
@@ -12,6 +12,7 @@ export const SignInPage = () => {
   const navigate = useNavigate()
   const setAuth = useAuthStore((state) => state.setAuth)
   const [showPassword, setShowPassword] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   const {
     register,
@@ -30,9 +31,15 @@ export const SignInPage = () => {
   const role = watch('role')
 
   const onSubmit = async (data: LoginFormData) => {
-    const response = await authService.login(data)
-    setAuth(response.user, response.token)
-    navigate('/events')
+    try {
+      setSubmitError(null)
+      const response = await authService.login(data)
+      setAuth(response.user, response.token)
+      navigate('/reservas/mias')
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Error al iniciar sesión'
+      setSubmitError(message)
+    }
   }
 
   const roleClasses = useMemo(
@@ -46,6 +53,9 @@ export const SignInPage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+      <div className="absolute top-6 right-6">
+        <AuthLinks />
+      </div>
       <div className="w-full max-w-[480px] flex flex-col items-center">
         <header className="mb-10 flex flex-col items-center text-center">
           <Logo variant="large" to="/" className="h-[100px] mb-6" />
@@ -76,6 +86,11 @@ export const SignInPage = () => {
           </div>
 
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+            {submitError && (
+              <div className="rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                {submitError}
+              </div>
+            )}
             <div className="space-y-2">
               <label className="text-xs uppercase tracking-widest text-white/50 ml-1">
                 Teléfono

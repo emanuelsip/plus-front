@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Input } from '@/components/ui'
-import { Logo } from '@/components/shared'
+import { AuthLinks, Logo } from '@/components/shared'
 import { authService } from '../services/authService'
 import { useAuthStore } from '../store/authStore'
 import { registerSchema, type RegisterFormData } from '../types'
@@ -12,6 +12,7 @@ export const SignUpPage = () => {
   const navigate = useNavigate()
   const setAuth = useAuthStore((state) => state.setAuth)
   const [showPassword, setShowPassword] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   const {
     register,
@@ -30,9 +31,15 @@ export const SignUpPage = () => {
   const role = watch('role')
 
   const onSubmit = async (data: RegisterFormData) => {
-    const response = await authService.register(data)
-    setAuth(response.user, response.token)
-    navigate('/events')
+    try {
+      setSubmitError(null)
+      const response = await authService.register(data)
+      setAuth(response.user, response.token)
+      navigate('/reservas/mias')
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Error al crear la cuenta'
+      setSubmitError(message)
+    }
   }
 
   const roleClasses = useMemo(
@@ -46,6 +53,9 @@ export const SignUpPage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+      <div className="absolute top-6 right-6">
+        <AuthLinks />
+      </div>
       <div className="w-full max-w-[520px] bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
         <div className="p-8 md:p-10">
           <div className="flex flex-col items-center text-center mb-8">
@@ -76,6 +86,11 @@ export const SignUpPage = () => {
           </div>
 
           <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+            {submitError && (
+              <div className="rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                {submitError}
+              </div>
+            )}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1.5">
                 <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">

@@ -1,22 +1,13 @@
 import { apiClient } from '@/api/client'
 import { API_ENDPOINTS } from '@/shared/constants'
 import type { Event, EventDetail } from '../types'
-import type { ApiResponse, PaginatedResponse } from '@/shared/types'
-import { mockEvents, mockEventDetail } from '../mocks/events'
-
-const USE_MOCKS = import.meta.env.VITE_USE_MOCKS === 'true' || import.meta.env.VITE_USE_MOCKS === undefined
+import type { ApiResponse } from '@/shared/types'
 
 export const eventsService = {
   /**
    * Obtener lista de eventos
    */
   async getEvents(): Promise<Event[]> {
-    if (USE_MOCKS) {
-      // Simular delay de API
-      await new Promise(resolve => setTimeout(resolve, 500))
-      return mockEvents
-    }
-
     const response = await apiClient.get<ApiResponse<Event[]>>(API_ENDPOINTS.EVENTS.LIST)
     return response.data.data
   },
@@ -25,11 +16,6 @@ export const eventsService = {
    * Obtener evento por ID
    */
   async getEventById(id: string | number): Promise<EventDetail> {
-    if (USE_MOCKS) {
-      await new Promise(resolve => setTimeout(resolve, 500))
-      return { ...mockEventDetail, id }
-    }
-
     const response = await apiClient.get<ApiResponse<EventDetail>>(
       API_ENDPOINTS.EVENTS.DETAIL(id)
     )

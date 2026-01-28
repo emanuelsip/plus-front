@@ -1,8 +1,9 @@
 import axios, { type AxiosInstance, type InternalAxiosRequestConfig, type AxiosError } from 'axios'
 
 // Base URL - cambiar según el entorno
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api'
-const SANCTUM_CSRF_URL = import.meta.env.VITE_SANCTUM_CSRF_URL || 'http://localhost:8000/sanctum/csrf-cookie'
+const API_BASE_URL = import.meta.env.VITE_API_URL
+  || import.meta.env.VITE_API_BASE_URL
+  || 'http://localhost:80/api'
 
 // Crear instancia de Axios
 export const apiClient: AxiosInstance = axios.create({
@@ -12,28 +13,12 @@ export const apiClient: AxiosInstance = axios.create({
     'Accept': 'application/json',
     'X-Requested-With': 'XMLHttpRequest', // Requerido por Sanctum
   },
-  withCredentials: true, // Necesario para Sanctum (cookies)
+  withCredentials: false, // API stateless con token Bearer
 })
-
-// Función para obtener el token CSRF de Sanctum
-export const getCsrfCookie = async (): Promise<void> => {
-  try {
-    await axios.get(SANCTUM_CSRF_URL, {
-      withCredentials: true,
-    })
-  } catch (error) {
-    console.warn('Error al obtener cookie CSRF:', error)
-  }
-}
 
 // Interceptor para agregar token de autenticación
 apiClient.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
-    // Obtener cookie CSRF antes de cada petición (solo en desarrollo o cuando sea necesario)
-    if (import.meta.env.DEV) {
-      await getCsrfCookie()
-    }
-
     // Agregar token Bearer si existe
     const token = localStorage.getItem('auth_token')
     if (token && config.headers) {
@@ -65,15 +50,6 @@ apiClient.interceptors.response.use(
 
       // Redirigir a login si es necesario (descomentar cuando tengas ruta de login)
       // window.location.href = '/login'
-    }
-
-    // Manejar error 419 (CSRF token mismatch)
-    if (error.response?.status === 419) {
-      await getCsrfCookie()
-      // Reintentar la petición original
-      if (originalRequest) {
-        return apiClient(originalRequest)
-      }
     }
 
     return Promise.reject(error)

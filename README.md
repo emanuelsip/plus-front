@@ -12,7 +12,6 @@ Plataforma de gestión de eventos exclusivos desarrollada con React, TypeScript,
 - **React Hook Form + Zod** para formularios y validaciones
 - **Axios** configurado para Laravel Sanctum
 - **Docker** para entorno de desarrollo
-- **Mock data** con toggle simple para integrar APIs reales
 - Arquitectura escalable basada en features
 
 ## 📁 Estructura del Proyecto
@@ -107,14 +106,6 @@ GID=1000
 - `npm run preview` - Previsualiza build de producción
 - `npm run lint` - Ejecuta linter
 
-## 🧭 Rutas Principales
-
-- `/` - Home (eventos destacados)
-- `/events` - Lista de eventos
-- `/events/:id` - Detalle de evento
-- `/auth/sign-in` - Inicio de sesión
-- `/auth/sign-up` - Registro
-
 ## 🏗️ Arquitectura
 
 ### Feature-Based Structure
@@ -164,7 +155,6 @@ La autenticación está preparada para Laravel Sanctum:
 ### Componentes Compartidos (`src/components/shared/`)
 - `Logo` - Logo de PLUS con variantes (default, small, large)
 - `Footer` - Footer con variantes (default, minimal)
-- `AuthLinks` - Links de acceso (Sign up / Sign in)
 
 ### Componentes UI (`src/components/ui/`)
 - `Button` - Botones con variantes (primary, secondary, outline, ghost, dashed)

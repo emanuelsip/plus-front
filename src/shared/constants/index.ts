@@ -4,8 +4,14 @@ export const API_ENDPOINTS = {
   AUTH: {
     LOGIN: '/auth/login',
     LOGOUT: '/auth/logout',
-    REGISTER: '/auth/register',
-    USER: '/auth/user',
+    ME: '/auth/me',
+  },
+  USERS: {
+    CREATE: '/usuarios',
+  },
+  RESERVAS: {
+    EVENTS: '/reservas/eventos',
+    DETAIL: '/reservas/mias',
   },
   EVENTS: {
     LIST: '/events',
