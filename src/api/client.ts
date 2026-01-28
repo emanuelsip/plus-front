@@ -15,6 +15,8 @@ export const apiClient: AxiosInstance = axios.create({
   withCredentials: false, // API stateless con token Bearer
 })
 
+console.log('Build check - API URL:', import.meta.env.VITE_API_URL);
+console.log('Build mode:', import.meta.env.MODE);
 // Interceptor para agregar token de autenticación
 apiClient.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
