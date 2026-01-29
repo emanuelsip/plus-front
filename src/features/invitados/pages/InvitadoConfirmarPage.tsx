@@ -1,7 +1,74 @@
-import { Link } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { AuthLinks, Logo } from '@/components/shared'
+import { eventsService } from '@/features/events/services/eventsService'
+import { reservasService } from '@/features/reservas/services/reservasService'
+import type { EventDetail } from '@/features/events/types'
 
 export const InvitadoConfirmarPage = () => {
+  const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
+  const invitacionId = searchParams.get('invitacion_id') || ''
+  const eventoId = searchParams.get('evento_id') || ''
+  const [event, setEvent] = useState<EventDetail | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [loadError, setLoadError] = useState<string | null>(null)
+  const [isConfirming, setIsConfirming] = useState(false)
+  const [confirmError, setConfirmError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchEvent = async () => {
+      if (!eventoId) {
+        setLoadError('Evento no encontrado.')
+        setIsLoading(false)
+        return
+      }
+
+      try {
+        setIsLoading(true)
+        const data = await eventsService.getEventById(eventoId)
+        setEvent(data)
+        setLoadError(null)
+      } catch (err) {
+        setLoadError(err instanceof Error ? err.message : 'Error al cargar el evento')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchEvent()
+  }, [eventoId])
+
+  const formattedDate = useMemo(() => {
+    if (!event?.date) return ''
+    const date = new Date(event.date)
+    if (Number.isNaN(date.getTime())) return ''
+    return date.toLocaleDateString('es-ES', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    })
+  }, [event?.date])
+
+  const handleConfirm = async () => {
+    if (!invitacionId) {
+      setConfirmError('Invitación no encontrada.')
+      return
+    }
+
+    try {
+      setIsConfirming(true)
+      setConfirmError(null)
+      await reservasService.confirmGuest({ invitado_reserva_id: invitacionId, confirmado: true })
+      const query = new URLSearchParams({ invitacion_id: invitacionId, evento_id: eventoId })
+      navigate(`/invitado/pago?${query.toString()}`)
+    } catch (err) {
+      setConfirmError(err instanceof Error ? err.message : 'No se pudo confirmar la invitación')
+    } finally {
+      setIsConfirming(false)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-black to-zinc-900 text-white">
       <div className="w-full max-w-[960px] mx-auto min-h-screen flex flex-col pb-8 px-4 sm:px-8">
@@ -18,65 +85,80 @@ export const InvitadoConfirmarPage = () => {
         </header>
 
         <main className="px-5 space-y-6 flex-grow">
-          <section className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl">
-            <img
-              alt="Valentine's Nightlife"
-              className="w-full h-full object-cover opacity-80"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2Mir_sTiReUuUYzS7AEf_s6qgu8g09zFfuER3RHMVL3lwPEU2Yjk8bRMaiQUHqbGJ5AO9SqrQg-fzdqIp2V9AqAolK62dfJ7n6AwvoRMeWry8QxGd-CLu1WqxGWfuNrw8KV0a0LxiMdtZ1ovKzGfw7Zb4MVcjzljokLi69uYg9E1UfeLk2AcFWFXEAEjhzL4iBeWXuxmeMuXP7IQmCmhkPlMP86VFkchkV5hWal7CN4I8r9Br1G_NyyyLc41n1p8e-f2fPgjOWNE"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <h1 className="font-display text-4xl md:text-5xl font-black text-white tracking-widest uppercase drop-shadow-lg">
-                Valentines
-              </h1>
-            </div>
-          </section>
+          {isLoading ? (
+            <section className="space-y-6">
+              <div className="h-56 bg-white/5 rounded-2xl animate-pulse" />
+              <div className="h-40 bg-white/5 rounded-2xl animate-pulse" />
+            </section>
+          ) : loadError || !event ? (
+            <section className="glass rounded-2xl p-6 text-center text-red-300">
+              {loadError || 'Evento no encontrado.'}
+            </section>
+          ) : (
+            <>
+              <section className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl">
+                <img
+                  alt={event.title}
+                  className="w-full h-full object-cover opacity-80"
+                  src={event.image}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <h1 className="font-display text-4xl md:text-5xl font-black text-white tracking-widest uppercase drop-shadow-lg">
+                    {event.title}
+                  </h1>
+                </div>
+              </section>
 
-          <section className="glass rounded-2xl p-6 space-y-4">
-            <div className="space-y-3">
-              <div className="flex items-center gap-4">
-                <span className="material-symbols-outlined text-primary">calendar_today</span>
-                <div>
-                  <p className="text-[10px] uppercase tracking-widest text-white/50">Fecha</p>
-                  <p className="font-display text-sm tracking-widest">14 de febrero, 2024</p>
+              <section className="glass rounded-2xl p-6 space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-4">
+                    <span className="material-symbols-outlined text-primary">calendar_today</span>
+                    <div>
+                      <p className="text-[10px] uppercase tracking-widest text-white/50">Fecha</p>
+                      <p className="font-display text-sm tracking-widest">{formattedDate}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <span className="material-symbols-outlined text-primary">schedule</span>
+                    <div>
+                      <p className="text-[10px] uppercase tracking-widest text-white/50">Hora</p>
+                      <p className="font-display text-sm tracking-widest">
+                        {event.start_time} - {event.end_time}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <span className="material-symbols-outlined text-primary">location_on</span>
+                    <div>
+                      <p className="text-[10px] uppercase tracking-widest text-white/50">Ubicación</p>
+                      <p className="font-display text-sm tracking-widest">{event.venue}</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <span className="material-symbols-outlined text-primary">schedule</span>
-                <div>
-                  <p className="text-[10px] uppercase tracking-widest text-white/50">Hora</p>
-                  <p className="font-display text-sm tracking-widest">22:00 - 05:00</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <span className="material-symbols-outlined text-primary">location_on</span>
-                <div>
-                  <p className="text-[10px] uppercase tracking-widest text-white/50">Ubicación</p>
-                  <p className="font-display text-sm tracking-widest">PLUS Main Hall</p>
-                </div>
-              </div>
-            </div>
-            <div className="pt-4 border-t border-white/10">
-              <p className="text-xs text-white/60 italic text-center">
-                Invitado por: <span className="text-primary font-medium not-italic">Líder Name</span>
-              </p>
-            </div>
-          </section>
+              </section>
+            </>
+          )}
 
           <section className="space-y-6 pt-4">
             <h2 className="text-center font-display text-xl tracking-widest">¿Confirmas tu asistencia?</h2>
             <div className="flex flex-col gap-4">
-              <Link
-                to="/invitado/pago"
-                className="gold-gradient w-full py-5 rounded-xl text-black font-bold uppercase tracking-[0.15em] shadow-[0_4px_20px_rgba(212,175,55,0.3)] flex items-center justify-center gap-3 active:scale-95 transition-transform"
+              <button
+                className="gold-gradient w-full py-5 rounded-xl text-black font-bold uppercase tracking-[0.15em] shadow-[0_4px_20px_rgba(212,175,55,0.3)] flex items-center justify-center gap-3 active:scale-95 transition-transform disabled:opacity-60 disabled:cursor-not-allowed"
+                type="button"
+                onClick={handleConfirm}
+                disabled={isConfirming || !invitacionId}
               >
                 <span className="material-symbols-outlined font-bold">check_circle</span>
-                SÍ, VOY A IR
-              </Link>
+                {isConfirming ? 'Confirmando...' : 'SÍ, VOY A IR'}
+              </button>
               <button className="w-full py-4 rounded-xl border border-white/20 text-white/60 font-medium uppercase tracking-[0.1em] flex items-center justify-center gap-3 hover:bg-white/5 active:scale-95 transition-transform">
                 NO VOY A IR
               </button>
             </div>
+            {confirmError && (
+              <p className="text-center text-red-300 text-xs uppercase tracking-widest">{confirmError}</p>
+            )}
           </section>
         </main>
 

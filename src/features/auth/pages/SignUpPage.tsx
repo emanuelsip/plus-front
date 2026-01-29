@@ -22,6 +22,7 @@ export const SignUpPage = () => {
     resolver: zodResolver(registerSchema),
     defaultValues: {
       accept_terms: false,
+      sex: '',
     },
   })
 
@@ -30,7 +31,7 @@ export const SignUpPage = () => {
       setSubmitError(null)
       const response = await authService.register(data)
       setAuth(response.user, response.token)
-      navigate('/reservas/mias')
+      navigate('/')
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Error al crear la cuenta'
       setSubmitError(message)
@@ -101,6 +102,34 @@ export const SignUpPage = () => {
                 error={errors.birth_date?.message}
                 {...register('birth_date')}
               />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">
+                Género
+              </label>
+              <div className="relative group">
+                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 transition-colors text-sm text-slate-500 group-focus-within:text-primary">
+                  wc
+                </span>
+                <select
+                  className={`w-full bg-white/5 border border-white/10 rounded-xl transition-all pl-12 py-3.5 pr-10 focus:ring-1 focus:border-primary focus:ring-primary appearance-none ${errors.sex ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
+                  {...register('sex')}
+                >
+                  <option value="" disabled>
+                    Selecciona una opción
+                  </option>
+                  <option value="masculino">Masculino</option>
+                  <option value="femenino">Femenino</option>
+                  <option value="otro">Otro</option>
+                </select>
+                <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none">
+                  expand_more
+                </span>
+              </div>
+              {errors.sex?.message && (
+                <p className="text-sm text-red-500">{errors.sex.message}</p>
+              )}
             </div>
 
             <div className="space-y-1.5">

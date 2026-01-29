@@ -3,7 +3,7 @@ import { HomePage } from '@/features/events/pages/HomePage'
 import { EventDetailPage } from '@/features/events/pages/EventDetailPage'
 import { EventsPage } from '@/features/events/pages/EventsPage'
 import { RequireAuth, SignInPage, SignUpPage } from '@/features/auth'
-import { ReservasPage } from '@/features/reservas'
+import { ReservasDetallePage, ReservasInvitacionesPage, ReservasPage } from '@/features/reservas'
 import { InvitadoConfirmacionPage, InvitadoConfirmarPage, InvitadoPagoPage } from '@/features/invitados'
 
 function App() {
@@ -18,6 +18,22 @@ function App() {
           element={(
             <RequireAuth>
               <ReservasPage />
+            </RequireAuth>
+          )}
+        />
+        <Route
+          path="/reservas/mias/:reservaId"
+          element={(
+            <RequireAuth>
+              <ReservasDetallePage />
+            </RequireAuth>
+          )}
+        />
+        <Route
+          path="/reservas/invitaciones"
+          element={(
+            <RequireAuth>
+              <ReservasInvitacionesPage />
             </RequireAuth>
           )}
         />

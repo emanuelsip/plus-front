@@ -11,7 +11,11 @@ export const API_ENDPOINTS = {
   },
   RESERVAS: {
     EVENTS: '/reservas/eventos',
-    DETAIL: '/reservas/mias',
+    DETAIL: (reservaId: string | number) => `/reservas/${reservaId}/detalle`,
+    GUESTS: (reservaId: string | number) => `/reservas/${reservaId}/invitados`,
+    CREATE_GUEST: '/reservas/invitados/crear',
+    CONFIRM_GUEST: '/reservas/invitados/confirmar',
+    PAY_GUEST: '/reservas/invitados/pagar',
   },
   EVENTS: {
     LIST: '/events',

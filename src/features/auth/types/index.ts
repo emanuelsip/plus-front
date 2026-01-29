@@ -10,6 +10,7 @@ export const registerSchema = z.object({
   first_name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
   last_name: z.string().min(2, 'El apellido debe tener al menos 2 caracteres'),
   birth_date: z.string().min(1, 'La fecha de nacimiento es requerida'),
+  sex: z.string().min(1, 'El género es requerido'),
   phone: z.string().min(8, 'El teléfono debe tener al menos 8 dígitos'),
   nit: z.string().min(2, 'El NIT es requerido'),
   password: z.string().min(6, 'La contraseña debe tener al menos 6 caracteres'),

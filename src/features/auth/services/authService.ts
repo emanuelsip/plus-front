@@ -83,6 +83,7 @@ export const authService = {
         nombres: data.first_name,
         apellidos: data.last_name,
         fecha_nacimiento: data.birth_date,
+        sexo: data.sex,
         telefono: data.phone,
         nit: data.nit,
         password: data.password,
