@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { AuthLinks, Logo } from '@/components/shared'
 import { eventsService } from '@/features/events/services/eventsService'
 import { reservasService } from '@/features/reservas/services/reservasService'
@@ -96,7 +96,13 @@ export const InvitadoPagoPage = () => {
         <header className="mb-12 pt-8">
           <div className="grid grid-cols-12 items-center">
             <div className="col-span-12 md:col-span-6" />
-            <div className="col-span-12 md:col-span-6 flex justify-end">
+            <div className="col-span-12 md:col-span-6 flex justify-end items-center gap-4">
+              <Link
+                className="text-xs uppercase tracking-[0.3em] text-white/60 hover:text-primary transition-colors"
+                to="/reservas/mias"
+              >
+                Mis eventos
+              </Link>
               <AuthLinks />
             </div>
             <div className="col-span-12 flex justify-center mt-8">

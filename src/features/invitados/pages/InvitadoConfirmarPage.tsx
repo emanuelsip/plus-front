@@ -75,7 +75,13 @@ export const InvitadoConfirmarPage = () => {
         <header className="mb-12 pt-8">
           <div className="grid grid-cols-12 items-center">
             <div className="col-span-12 md:col-span-6" />
-            <div className="col-span-12 md:col-span-6 flex justify-end">
+            <div className="col-span-12 md:col-span-6 flex justify-end items-center gap-4">
+              <Link
+                className="text-xs uppercase tracking-[0.3em] text-white/60 hover:text-primary transition-colors"
+                to="/reservas/mias"
+              >
+                Mis eventos
+              </Link>
               <AuthLinks />
             </div>
             <div className="col-span-12 flex justify-center mt-8">
